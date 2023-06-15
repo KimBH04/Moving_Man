@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public Image gauge;
     public TextMeshProUGUI arrowKey;
+    public TextMeshProUGUI timeTxt;
     public GameObject Panel;
 
     public float startSpeed = 0.001f;
@@ -21,12 +22,15 @@ public class GameManager : MonoBehaviour
 
     private bool key;
 
+    private float time;
+
     void Start()
     {
         gameOver = GetComponent<AudioSource>();
         anime.SetFloat(hashSpeed, 0f);
         Panel.SetActive(false);
         key = Random.Range(0, 2) > 0;
+        timeTxt.text = "0s";
         Change();
     }
 
@@ -70,6 +74,7 @@ public class GameManager : MonoBehaviour
         
         gauge.fillAmount -= startSpeed;
         startSpeed += Time.deltaTime * acceleration;
+        Timer();
 
         anime.SetFloat(hashSpeed, startSpeed * 200f);
     }
@@ -79,5 +84,11 @@ public class GameManager : MonoBehaviour
         key = !key;
         arrowKey.text = key ? "<" : ">";
         gauge.fillAmount = 1f;
+    }
+
+    void Timer()
+    {
+        time += Time.deltaTime;
+        timeTxt.text = time.ToString("0.000") + "s";
     }
 }

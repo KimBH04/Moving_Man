@@ -547,7 +547,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2783348254646895429, guid: 1e276f5be3893af4a8565058a7d83bb9, type: 3}
       propertyPath: m_Name
-      value: moving0
+      value: Kane
       objectReference: {fileID: 0}
     - target: {fileID: 2783348254646895430, guid: 1e276f5be3893af4a8565058a7d83bb9, type: 3}
       propertyPath: m_RootOrder
@@ -567,11 +567,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2783348254646895430, guid: 1e276f5be3893af4a8565058a7d83bb9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.04
+      value: 6.74
       objectReference: {fileID: 0}
     - target: {fileID: 2783348254646895430, guid: 1e276f5be3893af4a8565058a7d83bb9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.93
+      value: -0.63
       objectReference: {fileID: 0}
     - target: {fileID: 2783348254646895430, guid: 1e276f5be3893af4a8565058a7d83bb9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1106,7 +1106,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC2DC\uC791"
+  m_text: "\uD55C \uD310 \uD574\uC694"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 16933d3df62a9634093b0bbbd3007ccb, type: 2}
   m_sharedMaterial: {fileID: 2572520808411838680, guid: 16933d3df62a9634093b0bbbd3007ccb, type: 2}
