@@ -1,40 +1,71 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public Image gauge;
-    public TextMeshProUGUI arrowKey;
-    public TextMeshProUGUI timeTxt;
-    public GameObject Panel;
-
     public float startSpeed = 0.001f;
     public float acceleration = 1000f;
 
+    public Animator anime;
+
+    [Header("UI")]
+    public Image gauge;
+    public TextMeshProUGUI arrowKey;
+    public TextMeshProUGUI timeTxt;
+    public TextMeshProUGUI countDownTxt;
+    public GameObject Panel;
+
+    public Transform background;
+
+    [Header("Audio")]
+    public AudioClip chunjat;
+    public AudioClip dudududu;
+    public AudioClip aigonan;
+    private AudioSource audioSource;
+
     float startDelay = 3f;
 
-    public Animator anime;
     private readonly int hashSpeed = Animator.StringToHash("Speed");
 
     private bool isDie;
-    private AudioSource gameOver;
-
     private bool key;
 
     private float time;
 
-    void Start()
+    IEnumerator Start()
     {
-        gameOver = GetComponent<AudioSource>();
+        StartCoroutine(CountDown());
+        audioSource = GetComponent<AudioSource>();
+
         anime.SetFloat(hashSpeed, 0f);
         Panel.SetActive(false);
+
         key = Random.Range(0, 2) > 0;
-        timeTxt.text = "0s";
         Change();
+
+        timeTxt.text = "0s";
+
+        background.position = new(10f, 0f);
+
+        yield return new WaitForSeconds(startDelay);
+        audioSource.PlayOneShot(chunjat);
+        audioSource.clip = dudududu;
+        audioSource.Play();
     }
 
-    void Update()
+    IEnumerator CountDown()
+    {
+        for (int i = 3; i > 0; i--)
+        {
+            countDownTxt.text = i.ToString();
+            yield return new WaitForSeconds(1f);
+        }
+        countDownTxt.gameObject.SetActive(false);
+    }
+
+    void LateUpdate()
     {
         if (startDelay > 0f)
         {
@@ -52,31 +83,32 @@ public class GameManager : MonoBehaviour
             isDie = true;
             Panel.SetActive(true);
             anime.SetFloat(hashSpeed, 0f);
-            gameOver.Play();
+            audioSource.Stop();
+            audioSource.PlayOneShot(aigonan);
 
             return;
         }
 
-        if (key)
+        if (Input.GetKeyDown((KeyCode)275 + (key ? 1 : 0)))
         {
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                Change();
-            }
+            Change();
         }
-        else
-        {
-            if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                Change();
-            }
-        }
-        
-        gauge.fillAmount -= startSpeed;
+
+#if UNITY_EDITOR
         startSpeed += Time.deltaTime * acceleration;
+#else
+        startSpeed += Time.deltaTime * acceleration * 0.12f;
+#endif
+        gauge.fillAmount -= startSpeed;
         Timer();
 
-        anime.SetFloat(hashSpeed, startSpeed * 200f);
+        background.position -= new Vector3(startSpeed * 10f, 0f);
+        if (background.position.x < -10f)
+        {
+            background.position = new(10f, 0f);
+        }
+
+        anime.SetFloat(hashSpeed, startSpeed * 500f);
     }
 
     void Change()

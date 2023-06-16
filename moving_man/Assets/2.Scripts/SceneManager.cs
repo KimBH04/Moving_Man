@@ -1,10 +1,22 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneManager : MonoBehaviour
 {
-    public void SceneChange(string sceneName)
+    void Update()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == 0)
+                GameEnd();
+            else
+                SceneChange(0);
+        }
+    }
+
+    public void SceneChange(int sceneIndex)
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneIndex);
     }
 
     public void GameEnd()
