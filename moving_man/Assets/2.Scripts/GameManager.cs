@@ -5,10 +5,11 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public float startSpeed = 0.001f;
     public float acceleration = 1000f;
 
-    public Animator anime;
+    public GameObject kane;
+    private Animator anime;
+    private Transform trans;
 
     [Header("UI")]
     public Image gauge;
@@ -36,8 +37,16 @@ public class GameManager : MonoBehaviour
 
     private float time;
 
+    private float speed;
+    private float accele;
+    private float speedScale;
+
     IEnumerator Start()
     {
+        anime = kane.GetComponent<Animator>();
+        trans = kane.GetComponent<Transform>();
+
+        accele = Time.time;
         StartCoroutine(CountDown());
         StartCoroutine(UU_U());
         audioSource = GetComponent<AudioSource>();
@@ -68,6 +77,15 @@ public class GameManager : MonoBehaviour
         countDownTxt.gameObject.SetActive(false);
     }
 
+    IEnumerator UU_U()
+    {
+        yield return new WaitForSeconds(startDelay + 10f);
+        audioSource.PlayOneShot(uuu, 0.5f);
+
+        yield return new WaitForSeconds(10f);
+        audioSource.PlayOneShot(yonsa, 0.4f);
+    }
+
     void Update()
     {
         if (startDelay > 0f)
@@ -83,11 +101,13 @@ public class GameManager : MonoBehaviour
 
         if (gauge.fillAmount == 0f)
         {
+            StopAllCoroutines();
+
             isDie = true;
             Panel.SetActive(true);
             anime.SetFloat(hashSpeed, 0f);
             audioSource.Stop();
-            audioSource.PlayOneShot(aigonan, 0.7f);
+            audioSource.PlayOneShot(aigonan, 0.5f);
 
             return;
         }
@@ -97,26 +117,24 @@ public class GameManager : MonoBehaviour
             Change();
         }
 
-        startSpeed += Time.deltaTime * acceleration;
+        speed = (Time.time - accele) / 1500f * speedScale;
 
-        gauge.fillAmount -= startSpeed;
+        gauge.fillAmount -= speed;
         Timer();
 
-        background.position -= new Vector3(startSpeed * 10f, 0f);
+        background.position -= new Vector3(speed * 10f, 0f);
         if (background.position.x < -10f)
         {
             background.position = new(10f, 0f);
         }
 
-        anime.SetFloat(hashSpeed, startSpeed * 200f);
+        trans.position += new Vector3(Time.deltaTime / 7f, 0f);
+        anime.SetFloat(hashSpeed, speed * 500f);
     }
 
-    IEnumerator UU_U()
+    public void SpeedScale(float speed)
     {
-        yield return new WaitForSeconds(startDelay + 15f);
-        audioSource.PlayOneShot(uuu, 0.5f);
-        yield return new WaitForSeconds(15f);
-        audioSource.PlayOneShot(yonsa, 0.4f);
+        speedScale = (speed + 0.1f) * 2f;
     }
 
     void Change()
