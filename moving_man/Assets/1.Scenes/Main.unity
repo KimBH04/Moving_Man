@@ -2046,18 +2046,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb546eecafc9c044e9edec979444119e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startSpeed: 0.0005
+  acceleration: 0.0007
+  anime: {fileID: 196400239}
   gauge: {fileID: 1884735102}
   arrowKey: {fileID: 1549127719}
   timeTxt: {fileID: 1881427368}
   countDownTxt: {fileID: 1383944742}
   Panel: {fileID: 1039231240}
   background: {fileID: 1471263780}
-  startSpeed: 0.0005
-  acceleration: 0.0007
-  anime: {fileID: 196400239}
   chunjat: {fileID: 8300000, guid: 72bdd7d91a74b7544991faa81018d362, type: 3}
   dudududu: {fileID: 8300000, guid: fa9e6d975ddbbe445ba7ffc99dc1dbcd, type: 3}
   aigonan: {fileID: 8300000, guid: 3e4332c6ea09ea043bf1e2b993805bc2, type: 3}
+  uuu: {fileID: 8300000, guid: e9f0fa0472383e0408e4e0a03de1d8ee, type: 3}
+  yonsa: {fileID: 8300000, guid: 671ef8df5f415884887bca9a34afa7f0, type: 3}
 --- !u!4 &1944716746
 Transform:
   m_ObjectHideFlags: 0

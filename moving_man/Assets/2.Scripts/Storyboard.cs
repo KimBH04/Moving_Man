@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Storyboard : MonoBehaviour
@@ -43,6 +42,6 @@ public class Storyboard : MonoBehaviour
         m_AudioSource.Play();
         yield return new WaitForSeconds(2);
 
-        //¹«ºù
+        //ë¬´ë¹™
     }
 }

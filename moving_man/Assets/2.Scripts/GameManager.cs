@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     public AudioClip chunjat;
     public AudioClip dudududu;
     public AudioClip aigonan;
+    public AudioClip uuu;
+    public AudioClip yonsa;
     private AudioSource audioSource;
 
     float startDelay = 3f;
@@ -37,6 +39,7 @@ public class GameManager : MonoBehaviour
     IEnumerator Start()
     {
         StartCoroutine(CountDown());
+        StartCoroutine(UU_U());
         audioSource = GetComponent<AudioSource>();
 
         anime.SetFloat(hashSpeed, 0f);
@@ -65,7 +68,7 @@ public class GameManager : MonoBehaviour
         countDownTxt.gameObject.SetActive(false);
     }
 
-    void LateUpdate()
+    void Update()
     {
         if (startDelay > 0f)
         {
@@ -84,7 +87,7 @@ public class GameManager : MonoBehaviour
             Panel.SetActive(true);
             anime.SetFloat(hashSpeed, 0f);
             audioSource.Stop();
-            audioSource.PlayOneShot(aigonan);
+            audioSource.PlayOneShot(aigonan, 0.7f);
 
             return;
         }
@@ -94,11 +97,8 @@ public class GameManager : MonoBehaviour
             Change();
         }
 
-#if UNITY_EDITOR
         startSpeed += Time.deltaTime * acceleration;
-#else
-        startSpeed += Time.deltaTime * acceleration * 0.12f;
-#endif
+
         gauge.fillAmount -= startSpeed;
         Timer();
 
@@ -108,7 +108,15 @@ public class GameManager : MonoBehaviour
             background.position = new(10f, 0f);
         }
 
-        anime.SetFloat(hashSpeed, startSpeed * 500f);
+        anime.SetFloat(hashSpeed, startSpeed * 200f);
+    }
+
+    IEnumerator UU_U()
+    {
+        yield return new WaitForSeconds(startDelay + 15f);
+        audioSource.PlayOneShot(uuu, 0.5f);
+        yield return new WaitForSeconds(15f);
+        audioSource.PlayOneShot(yonsa, 0.4f);
     }
 
     void Change()
